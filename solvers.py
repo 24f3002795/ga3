@@ -1070,6 +1070,11 @@ async def solve_korean_audio(body: Dict[str, Any]) -> Dict[str, Any]:
             logger.warning("Q6 column name correction: '%s' -> '%s'", c, _COL_CORRECTIONS[c])
             columns[i] = _COL_CORRECTIONS[c]
 
+
+    # Remove generic value column if a specific column already exists
+    if "값" in columns and len(columns) > 1:
+        columns = [c for c in columns if c != "값"]
+
     # Deduplicate columns
     seen_cols = set()
     unique_cols = []
